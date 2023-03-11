@@ -64,12 +64,6 @@ for i in range(days, days-2, -1):
 header = ["id", "author_fullname", "distinguished", "score", "link_id", "subreddit", "permalink", 'body', 'author', 'created_utc']
 comments_df.to_csv(removed_submissions_comments_file, columns=header)
 
-#The submission details for each comment can be found using the following endpoint.
-#https://api.pushshift.io/reddit/search/submission?q=*&id=r7go8l
-#We need the submission author, submission title, link or text posted in the submission if any, and the Reddit URL for the submission
-#submission author: "author_fullname"
-#submission title: "title"
-#Reddit URL for the submission: "url"
 
         
         
