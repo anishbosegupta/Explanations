@@ -27,23 +27,23 @@ reddit_explanations.mkdir(exist_ok=True)
 removed_submissions_comments_file = reddit_explanations/"comments.csv"
 removed_submissions_comments_file.touch()
 
-base = date(2021, 12, 1)
+base = date(2021, 12, 3)
 print("base date", base)
 today = date.today()
 print("Today's date:", today)
 diff_in_dates = today - base
-days = diff_in_dates.days
+days = diff_in_dates.days #days is the number of days from today to the dates specified on line 30.
 print(days)
-comments_df = pd.DataFrame()
+comments_df = pd.DataFrame() #create an empty dataframe for comments.
 
-#Loop for each day in Dec 2021 to get the comments with the word removed and and add to comments_df
+#Loop for each day from days to days-(numnumber specified) to get the comments with the word removed and and add to comments_df
 for i in range(days, days-2, -1):
     after_days=i
     before_days=i-1
     after_days_str = str(after_days)+"d"
     before_days_str = str(before_days)+"d"
-    #url = "https://api.pushshift.io/reddit/comment/search/?q=removed&"
-    url = "https://api.pushshift.io/reddit/comment/search/?q='was removed'|'has been removed'&"
+    #Build Pushshift URL for getting the removal explanations
+    url = "https://api.pushshift.io/reddit/comment/search/?q='was removed'|'has been removed'&subreddit=science|politics|AskReddit|technology&"
     params = { "distinguished": "moderator","after": after_days_str, "before": before_days_str, "size": "1000"}
     url = url + urllib.parse.urlencode(params) # Forming the url
     print(url)
@@ -58,8 +58,8 @@ for i in range(days, days-2, -1):
         print("The endpoint could not be reached.")
 
 
-for col_name in comments_df.columns:
-        print(f"Column name: {col_name}") 
+#for col_name in comments_df.columns:
+        #print(f"Column name: {col_name}") 
 
 header = ["id", "author_fullname", "distinguished", "score", "link_id", "subreddit", "permalink", 'body', 'author', 'created_utc']
 comments_df.to_csv(removed_submissions_comments_file, columns=header)
