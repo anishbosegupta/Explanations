@@ -58,7 +58,7 @@ for i in range(len(comments)):
         sub_created_utc_list.append("Not found")
         sub_selftext_list.append("Not found")
         print("Could not get submission from Reddit")
-    time.sleep(5)
+    #time.sleep(5)
     
 comments['submission_author'] = sub_author_list
 comments['submission_title'] = sub_title_list
@@ -70,8 +70,7 @@ comments['submission_selftext'] = sub_selftext_list
 header = ["id", "author_fullname", "distinguished", "score", "link_id", "subreddit", "permalink", 'body', 'author', 'created_utc', 'submission_author', 'submission_title', 'submission_reddit_url','submission_score','submission_created_utc','submission_selftext']
 # Check the initial shape of the DataFrame
 print(f"Old Shape: {comments.shape}")
-# Delete rows where case numbers are zero
-# This deletion is completed by "selecting" rows where case numbers are non zero
+# Delete rows where submission_title = "Not found"
 comments = comments.loc[comments["submission_title"] != "Not found"]
 print(f"Shape: {comments.shape}")
 comments.to_csv(submissions_with_comments_file, columns=header)
